@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addTemplate, addTypeTemplate, addImports } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addTemplate, addTypeTemplate, addImports, useLogger } from '@nuxt/kit'
 import type { LocaleOptions } from './options'
 import { genAvailableLocalesCode, genLazyImportLangCode } from './gen'
 
@@ -10,11 +10,7 @@ export default defineNuxtModule<LocaleOptions>({
   // Default configuration options of the Nuxt module
   defaults: {
     langDir: 'locales',
-    lang: {
-      'en-US': {
-        name: 'English'
-      }
-    }
+    lang: {}
   },
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
@@ -22,6 +18,15 @@ export default defineNuxtModule<LocaleOptions>({
     const localesResolver = createResolver(srcResolver.resolve(
       options.langDir
     ))
+
+    const logger = useLogger('nuxt-i18n-lite')
+
+    const lang = options.lang
+
+    if (Object.keys(lang).length === 0) {
+      lang['en-US'] = { name: 'English' }
+      logger.warn('No language is configured, added English (en-US) as default.')
+    }
 
     const available = Object.entries(options.lang).map(([code, lang]) => {
       return {

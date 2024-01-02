@@ -10,7 +10,7 @@ describe('Basic', async () => {
   it('with no accept-language', async () => {
     // Get response to a server-rendered page with `$fetch`.
     const html = await $fetch('/')
-    check(html, 'en-US')
+    check(html, 'en')
   })
 
   it('with accept-language', async () => {
@@ -34,7 +34,7 @@ describe('Basic', async () => {
 })
 
 function check(html: string, locale: string) {
-  if (locale === 'en-US') {
+  if (locale === 'en') {
     expect(html).toContain(`locale: ${locale}`)
     expect(html).toContain(`general.hello: Hello`)
     expect(html).toContain(`general.deep.hello: Deep: Hello`)
