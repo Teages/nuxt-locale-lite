@@ -9,6 +9,7 @@ export function useLocales(): {
   loadedLocales: string[]
   locales: ReturnType<typeof useLocalesInternal>['locales']
   locale: WritableComputedRef<LocaleCode>
+  setLocale: (code: LocaleCode) => Promise<void>
   userPrefer: ReturnType<typeof useLocalesInternal>['userPrefer']
   browserPrefer: ReturnType<typeof useLocalesInternal>['browserPrefer']
   browserMatch: ReturnType<typeof useLocalesInternal>['browserMatch']
@@ -43,5 +44,5 @@ export function useLocales(): {
     set: setLocale,
   })
 
-  return { t, loadedLocales, locales, locale, userPrefer, browserPrefer, browserMatch }
+  return { t, loadedLocales, locales, locale, setLocale, userPrefer, browserPrefer, browserMatch }
 }
