@@ -1,6 +1,6 @@
 {
   "name": "@teages/nuxt-locale-lite",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Use minimal configuration to setup i18n for your Nuxt app.",
   "repository": {
     "type": "git",
