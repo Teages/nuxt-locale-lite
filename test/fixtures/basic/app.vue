@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { loadedLocales, locales, locale } = useLocales()
+const { locale } = useLocales()
 </script>
 
 <template>
