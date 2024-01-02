@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.4
+
+[compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.3...v0.0.4)
+
+### 🩹 Fixes
+
+- Fallback when cookie is wrong ([103eb98](https://github.com/Teages/nuxt-locale-lite/commit/103eb98))
+
+### ❤️ Contributors
+
+- Teages <Teages@teages.xyz>
+
 ## v0.0.3
 
 [compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.1...v0.0.3)
