@@ -7,6 +7,13 @@
 
 Use minimal configuration to setup i18n for your Nuxt app.
 
+## Features
+
+- 🚀 Minimal config, add multi-language support in just three minutes
+- 🪶 Build-in (and force) lazy-load support
+
+Used by [Cytoid/cytoid.io](https://cytoid.io).
+
 ## Quick Setup
 
 1. Add `@teages/nuxt-locale-lite` dependency to your project
@@ -59,6 +66,68 @@ Add these config to your `settings.json`:
 ```
 
 That's it! ✨
+
+## How to use
+
+### Add locale files
+
+This module will automatically load the locale files under the `locales` (or path you configured) directory.
+
+For example, we have the following directory structure:
+
+```bash
+locales
+├── en-US
+│   ├── another.json
+│   └── general.json
+├── zh-CN
+│   ├── another.json
+│   └── general.json
+└── ja-JP
+    ├── another.json
+    └── general.json
+```
+
+in `locales/en-US/general.json`:
+```json
+{
+  "hello": "Hello world!",
+  "deep": {
+    "hello": "Hello the deep world!"
+  }
+}
+```
+
+### Get locale messages
+
+Then you can use the following code to get the locale messages:
+
+```vue
+<script setup>
+const { t } = useLocales()
+console.log(t('general.hello')) // Hello world!
+</script>
+
+<template>
+  <div>
+    {{ $t('general.deep.hello') }} <!-- Hello the deep world! -->
+  </div>
+</template>
+```
+
+### Change locale
+
+You can use the following code to change the locale:
+
+```ts
+const { locale, setLocale } = useLocales()
+console.log(locale.value) // en-US
+setLocale('zh-CN')
+console.log(locale.value) // zh-CN
+
+// or
+locale.value = 'ja-JP'
+```
 
 ## Development
 
