@@ -1,0 +1,6 @@
+{
+  "hello": "Another Hello",
+  "deep": {
+    "hello": "Deep: Another Hello"
+  }
+}
