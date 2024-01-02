@@ -31,6 +31,16 @@ describe('Basic', async () => {
     })
     check(html, 'ja-JP')
   })
+
+  it('with accept-language and wrong cookie', async () => {
+    const html = await $fetch('/', {
+      headers: {
+        'Accept-Language': 'zh-CN',
+        Cookie: 'locale=ha-CK',
+      },
+    })
+    check(html, 'zh-CN')
+  })
 })
 
 function check(html: string, locale: string) {
