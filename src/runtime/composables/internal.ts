@@ -5,7 +5,7 @@ import { computed, useCookie, useState } from "#imports"
 export function useLocalesInternal() {
   const _locales: Array<{ name: string, code: LocaleCode }> = available as any
 
-  const browserPrefer = useState<string[]>('i18n-lite:browserAcceptLocale', () => [])
+  const browserPrefer = useState<string[]>('locale-lite:browserAcceptLocale', () => [])
   const browserMatch = computed<LocaleCode | null>(() => {
     const available = new Map<string, string>()
     for (const lang of _locales) {
