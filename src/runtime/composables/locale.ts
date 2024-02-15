@@ -6,7 +6,7 @@ import type { WritableComputedRef } from 'vue'
 
 export function useLocales(): {
   t: ReturnType<typeof useI18n>['t']
-  loadedLocales: string[]
+  loadedLocales: LocaleCode[]
   locales: ReturnType<typeof useLocalesInternal>['locales']
   locale: WritableComputedRef<LocaleCode>
   setLocale: (code: LocaleCode) => Promise<void>
@@ -17,11 +17,10 @@ export function useLocales(): {
   const { locale: _locale, availableLocales: loadedLocales, t, setLocaleMessage } = useI18n()
   const { locales, browserPrefer, browserMatch, userPrefer } = useLocalesInternal()
 
-  const setLocaleWithoutSave = async (code: string) => {
+  const setLocaleWithoutSave = async (code: LocaleCode) => {
     // lazy load
     if (locales.value.find(l => l.code === code && !loadedLocales.includes(code))) {
-      const m = await lazyImportLang(code as any)
-      console.log('set locale', code, m)
+      const m = await lazyImportLang(code)
       setLocaleMessage(code, m)
       loadedLocales.push(code)
     }
@@ -33,16 +32,24 @@ export function useLocales(): {
     useHead({
       htmlAttrs: {
         lang: code,
-        // lang: code
       },
     })
     return setLocaleWithoutSave(code)
   }
 
   const locale = computed<LocaleCode>({
-    get: () => userPrefer.value ?? browserMatch.value ?? _locale.value,
+    get: () => userPrefer.value ?? browserMatch.value ?? _locale.value as LocaleCode,
     set: setLocale,
   })
 
-  return { t, loadedLocales, locales, locale, setLocale, userPrefer, browserPrefer, browserMatch }
+  return {
+    t,
+    loadedLocales: loadedLocales as LocaleCode[],
+    locales,
+    locale,
+    setLocale,
+    userPrefer,
+    browserPrefer,
+    browserMatch
+  }
 }

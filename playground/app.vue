@@ -39,6 +39,9 @@ const { loadedLocales, locales, locale } = useLocales()
       <button @click="locale = 'ja-JP'">
         Japanese
       </button>
+      <button @click="locale = 'ru-RU'">
+        Russian
+      </button>
     </div>
   </div>
 </template>

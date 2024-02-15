@@ -12,7 +12,7 @@ export function genAvailableLocalesCode(
   ].join('\n')
 
   const type = [
-    `export declare const available: { code: string, name: string }[]`,
+    `export declare const available: { code: ${ available.map(o => `'${o.code}'`).join(' | ') }, name: string }[]`,
     `export declare const defaultLang: '${defaultLang}'`
   ].join('\n')
 

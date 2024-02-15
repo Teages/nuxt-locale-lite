@@ -19,7 +19,7 @@ export function useLocalesInternal() {
 
     for (const lang of browserPrefer.value) {
       if (available.has(lang)) {
-        return lang as LocaleCode
+        return available.get(lang) as LocaleCode
       }
     }
     return null
