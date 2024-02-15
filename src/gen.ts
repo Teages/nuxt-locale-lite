@@ -1,6 +1,6 @@
-import { globSync } from "glob"
-import { genDynamicImport } from "knitwork"
-import { relative } from "pathe"
+import { globSync } from 'glob'
+import { genDynamicImport } from 'knitwork'
+import { relative } from 'pathe'
 
 export function genAvailableLocalesCode(
   available: Array<{ code: string, name: string }>,
@@ -8,12 +8,12 @@ export function genAvailableLocalesCode(
 ) {
   const code = [
     `export const available = ${JSON.stringify(available)}`,
-    `export const defaultLang = '${defaultLang}'`
+    `export const defaultLang = '${defaultLang}'`,
   ].join('\n')
 
   const type = [
-    `export declare const available: { code: ${ available.map(o => `'${o.code}'`).join(' | ') }, name: string }[]`,
-    `export declare const defaultLang: '${defaultLang}'`
+    `export declare const available: { code: ${available.map(o => `'${o.code}'`).join(' | ')}, name: string }[]`,
+    `export declare const defaultLang: '${defaultLang}'`,
   ].join('\n')
 
   return { code, type }
@@ -37,21 +37,21 @@ export function genLazyImportLangCode(
             .replace(/\//g, '.')
           return `    ${name}: (await (${genDynamicImport(p)})()).default`
         }).join(',\n'),
-        `  })`
+        `  })`,
       ].join('\n')
     }),
     `}`,
     `export function lazyImportLang(locale) {`,
     `  return locales[locale]()`,
-    `}`
+    `}`,
   ].join('\n')
 
   const type = [
     `interface LocaleRecord {`,
     `  [key: string]: string | LocaleRecord;`,
     `}`,
-    `type LocaleCode = ${Object.keys(lang).map((code) => `'${code}'`).join(' | ')};`,
-    `export function lazyImportLang(locale: LocaleCode): Promise<LocaleRecord>`
+    `type LocaleCode = ${Object.keys(lang).map(code => `'${code}'`).join(' | ')};`,
+    `export function lazyImportLang(locale: LocaleCode): Promise<LocaleRecord>`,
   ].join('\n')
 
   return { code, type }

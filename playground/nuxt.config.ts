@@ -8,5 +8,5 @@ export default defineNuxtConfig({
       'ru-RU': { name: 'русский' },
     },
   },
-  devtools: { enabled: true }
+  devtools: { enabled: true },
 })

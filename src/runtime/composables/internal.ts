@@ -1,7 +1,7 @@
-import type { LocaleCode } from "#build/locales/lazy-import"
+import destr from 'destr'
+import type { LocaleCode } from '#build/locales/lazy-import'
 import { available } from '#build/locales/available'
-import { computed, useCookie, useState } from "#imports"
-import destr from "destr"
+import { computed, useCookie, useState } from '#imports'
 
 export function useLocalesInternal() {
   const _locales: Array<{ name: string, code: LocaleCode }> = available as any
@@ -26,7 +26,7 @@ export function useLocalesInternal() {
   })
   const userPrefer = useCookie<LocaleCode | null>('locale', {
     maxAge: 35_600 * 24 * 60 * 60, // forever
-    decode: val => {
+    decode: (val) => {
       const parsed = destr<string>(decodeURIComponent(val))
       if (_locales.find(l => l.code === parsed)) {
         return parsed as LocaleCode
@@ -38,6 +38,9 @@ export function useLocalesInternal() {
   const locales = computed(() => _locales)
 
   return {
-    locales, browserPrefer, browserMatch, userPrefer,
+    locales,
+    browserPrefer,
+    browserMatch,
+    userPrefer,
   }
 }

@@ -1,14 +1,13 @@
-import { defineNuxtPlugin, useHead, useRequestHeaders } from '#imports'
 import { createI18n } from 'vue-i18n'
 import { decodeBrowserAcceptLang, lazyImportLang } from '../utils'
 import { useLocalesInternal } from '../composables/internal'
+import { defineNuxtPlugin, useHead, useRequestHeaders } from '#imports'
 import { defaultLang } from '#build/locales/available'
-
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const { browserPrefer, browserMatch, userPrefer } = useLocalesInternal()
 
-  if (process.server) {
+  if (import.meta.server) {
     const rawAcceptLang = useRequestHeaders(['accept-language'])['accept-language'] ?? ''
     browserPrefer.value = [...decodeBrowserAcceptLang(rawAcceptLang)]
   }
@@ -23,14 +22,16 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     fallbackLocale: defaultLang,
     messages: {
       [defaultLang]: await lazyImportLang(defaultLang),
-      ...(locale !== defaultLang ? {
-        [locale]: await lazyImportLang(locale),
-      } : {}),
+      ...(locale !== defaultLang
+        ? {
+            [locale]: await lazyImportLang(locale),
+          }
+        : {}),
     },
   })
   vueApp.use(i18n)
 
-  if (process.server) {
+  if (import.meta.server) {
     useHead({
       htmlAttrs: {
         lang: locale,

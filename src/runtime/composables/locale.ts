@@ -1,8 +1,8 @@
 import { useI18n } from 'vue-i18n'
-import { lazyImportLang, type LocaleCode } from '#build/locales/lazy-import'
-import { computed, useHead } from '#imports'
-import { useLocalesInternal } from './internal'
 import type { WritableComputedRef } from 'vue'
+import { useLocalesInternal } from './internal'
+import { type LocaleCode, lazyImportLang } from '#build/locales/lazy-import'
+import { computed, useHead } from '#imports'
 
 export function useLocales(): {
   t: ReturnType<typeof useI18n>['t']
@@ -50,6 +50,6 @@ export function useLocales(): {
     setLocale,
     userPrefer,
     browserPrefer,
-    browserMatch
+    browserMatch,
   }
 }

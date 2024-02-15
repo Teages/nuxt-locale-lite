@@ -61,7 +61,7 @@ Add these config to your `settings.json`:
   "i18n-ally.keystyle": "nested",
   "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
   "i18n-ally.namespace": true,
-  "i18n-ally.sourceLanguage": "en-US", // or your default locale
+  "i18n-ally.sourceLanguage": "en-US" // or your default locale
 }
 ```
 

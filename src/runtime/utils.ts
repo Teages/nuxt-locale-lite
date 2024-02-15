@@ -22,7 +22,8 @@ export function decodeBrowserAcceptLang(rawAcceptLang: string): string[] {
         langSet.delete(langCode[0])
       }
       langSet.add(langCode[0])
-    } else {
+    }
+    else {
       keepSet.add(lang.code)
     }
   }

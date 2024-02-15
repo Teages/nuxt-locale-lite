@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
 import { fileURLToPath } from 'node:url'
-import { setup, $fetch } from '@nuxt/test-utils/e2e'
+import { describe, expect, it } from 'vitest'
+import { $fetch, setup } from '@nuxt/test-utils/e2e'
 
-describe('Basic', async () => {
+describe('basic', async () => {
   await setup({
     rootDir: fileURLToPath(new URL('./fixtures/basic', import.meta.url)),
   })
@@ -35,7 +35,7 @@ describe('Basic', async () => {
     const html = await $fetch('/', {
       headers: {
         'Accept-Language': 'zh-CN',
-        Cookie: 'locale=ja-JP',
+        'Cookie': 'locale=ja-JP',
       },
     })
     check(html, 'ja-JP')
@@ -45,7 +45,7 @@ describe('Basic', async () => {
     const html = await $fetch('/', {
       headers: {
         'Accept-Language': 'zh-CN',
-        Cookie: 'locale=ha-CK',
+        'Cookie': 'locale=ha-CK',
       },
     })
     check(html, 'zh-CN')
