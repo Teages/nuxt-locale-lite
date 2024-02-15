@@ -4,7 +4,7 @@ import { genAvailableLocalesCode, genLazyImportLangCode } from './gen'
 
 export default defineNuxtModule<LocaleOptions>({
   meta: {
-    name: '@teages/nuxt-i18n-lite',
+    name: '@teages/nuxt-locale-lite',
     configKey: 'locale',
   },
   // Default configuration options of the Nuxt module
@@ -19,7 +19,7 @@ export default defineNuxtModule<LocaleOptions>({
       options.langDir,
     ))
 
-    const logger = useLogger('nuxt-i18n-lite')
+    const logger = useLogger('nuxt-locale-lite')
 
     const lang = options.lang
 
