@@ -1,13 +1,13 @@
 {
   "name": "@teages/nuxt-locale-lite",
+  "type": "module",
   "version": "0.0.4",
   "description": "Use minimal configuration to setup i18n for your Nuxt app.",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Teages/nuxt-locale-lite.git"
   },
-  "license": "MIT",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
@@ -27,6 +27,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "release": "pnpm run lint && pnpm run test && pnpm run prepack && changelogen --release && pnpm publish && git push --follow-tags",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch"
   },
@@ -39,6 +40,7 @@
     "vue-i18n": "^9.8.0"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.6.4",
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxt/module-builder": "^0.5.5",
