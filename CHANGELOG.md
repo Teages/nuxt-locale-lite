@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.0.5
+
+[compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.4...v0.0.5)
+
+### 🩹 Fixes
+
+- Crash when browser send language code only ([b7ee4f8](https://github.com/Teages/nuxt-locale-lite/commit/b7ee4f8))
+
+### 🏡 Chore
+
+- **lint:** Using antfu's rule ([6000b21](https://github.com/Teages/nuxt-locale-lite/commit/6000b21))
+- **lint:** Apply eslint fix ([1f903b7](https://github.com/Teages/nuxt-locale-lite/commit/1f903b7))
+
+### ❤️ Contributors
+
+- Teages ([@Teages](http://github.com/Teages))
+
 ## v0.0.4
 
 [compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.3...v0.0.4)
