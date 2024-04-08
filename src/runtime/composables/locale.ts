@@ -1,10 +1,18 @@
-import { useI18n } from 'vue-i18n'
+import { type UseI18nOptions, useI18n } from 'vue-i18n'
 import type { WritableComputedRef } from 'vue'
 import { useLocalesInternal } from './internal'
 import { type LocaleCode, lazyImportLang } from '#build/locales/lazy-import'
-import { computed, useHead } from '#imports'
+import { computed, useHead, useNuxtApp } from '#imports'
 
-export function useLocales(): {
+type useLocalesArgsType = {
+  // get the global i18n instance, it is very useful when you want to use $t out of setup()
+  global: true
+} | {
+  global?: false
+  i18n: UseI18nOptions
+}
+
+interface useLocalesReturnType {
   t: ReturnType<typeof useI18n>['t']
   loadedLocales: LocaleCode[]
   locales: ReturnType<typeof useLocalesInternal>['locales']
@@ -13,8 +21,16 @@ export function useLocales(): {
   userPrefer: ReturnType<typeof useLocalesInternal>['userPrefer']
   browserPrefer: ReturnType<typeof useLocalesInternal>['browserPrefer']
   browserMatch: ReturnType<typeof useLocalesInternal>['browserMatch']
-} {
-  const { locale: _locale, availableLocales: loadedLocales, t, setLocaleMessage } = useI18n()
+  i18n: ReturnType<typeof useI18n>
+}
+
+export function useLocales(options?: useLocalesArgsType): useLocalesReturnType {
+  const i18n = options?.global === true
+    ? useNuxtApp().$i18n.global
+    : useI18n()
+
+  const { locale: _locale, availableLocales: loadedLocales, t, setLocaleMessage } = i18n as ReturnType<typeof useI18n>
+
   const { locales, browserPrefer, browserMatch, userPrefer } = useLocalesInternal()
 
   const setLocaleWithoutSave = async (code: LocaleCode) => {
@@ -51,5 +67,6 @@ export function useLocales(): {
     userPrefer,
     browserPrefer,
     browserMatch,
+    i18n,
   }
 }
