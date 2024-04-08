@@ -11,12 +11,19 @@ export function genAvailableLocalesCode(
     `export const defaultLang = '${defaultLang}'`,
   ].join('\n')
 
+  return code
+}
+
+export function genAvailableLocalesType(
+  available: Array<{ code: string, name: string }>,
+  defaultLang: string,
+) {
   const type = [
     `export declare const available: { code: ${available.map(o => `'${o.code}'`).join(' | ')}, name: string }[]`,
     `export declare const defaultLang: '${defaultLang}'`,
   ].join('\n')
 
-  return { code, type }
+  return type
 }
 
 export function genLazyImportLangCode(
@@ -46,6 +53,12 @@ export function genLazyImportLangCode(
     `}`,
   ].join('\n')
 
+  return code
+}
+
+export function genLazyImportLangCodeType(
+  lang: Record<string, any>,
+) {
   const type = [
     `interface LocaleRecord {`,
     `  [key: string]: string | LocaleRecord;`,
@@ -54,5 +67,5 @@ export function genLazyImportLangCode(
     `export function lazyImportLang(locale: LocaleCode): Promise<LocaleRecord>`,
   ].join('\n')
 
-  return { code, type }
+  return type
 }

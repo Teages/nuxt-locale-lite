@@ -1,6 +1,6 @@
-import { addImports, addPlugin, addTemplate, addTypeTemplate, createResolver, defineNuxtModule, useLogger } from '@nuxt/kit'
+import { addImports, addPlugin, addTemplate, addTypeTemplate, createResolver, defineNuxtModule, updateTemplates, useLogger } from '@nuxt/kit'
 import type { LocaleOptions } from './options'
-import { genAvailableLocalesCode, genLazyImportLangCode } from './gen'
+import { genAvailableLocalesCode, genAvailableLocalesType, genLazyImportLangCode, genLazyImportLangCodeType } from './gen'
 
 export default defineNuxtModule<LocaleOptions>({
   meta: {
@@ -15,9 +15,8 @@ export default defineNuxtModule<LocaleOptions>({
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
     const srcResolver = createResolver(nuxt.options.srcDir)
-    const localesResolver = createResolver(srcResolver.resolve(
-      options.langDir,
-    ))
+    const langDir = srcResolver.resolve(options.langDir)
+    const localesResolver = createResolver(langDir)
 
     const logger = useLogger('nuxt-locale-lite')
 
@@ -28,7 +27,7 @@ export default defineNuxtModule<LocaleOptions>({
       logger.warn('No language is configured, added English (en-US) as default.')
     }
 
-    const available = Object.entries(options.lang).map(([code, lang]) => {
+    const available = Object.entries(lang).map(([code, lang]) => {
       return {
         code,
         name: lang.name,
@@ -36,24 +35,45 @@ export default defineNuxtModule<LocaleOptions>({
     })
     const defaultLang = options.defaultLocale ?? available[0].code
 
-    const availableCodes = genAvailableLocalesCode(available, defaultLang)
     addTemplate({
       filename: 'locales/available.mjs',
-      getContents: () => availableCodes.code,
+      getContents: () => genAvailableLocalesCode(available, defaultLang),
     })
     addTypeTemplate({
       filename: 'locales/available.d.ts',
-      getContents: () => availableCodes.type,
+      getContents: () => genAvailableLocalesType(available, defaultLang),
     })
-
-    const lazyImportLangCode = genLazyImportLangCode(options.lang, localesResolver.resolve)
     addTemplate({
       filename: 'locales/lazy-import.mjs',
-      getContents: () => lazyImportLangCode.code,
+      getContents: () => genLazyImportLangCode(lang, localesResolver.resolve),
     })
     addTypeTemplate({
       filename: 'locales/lazy-import.d.ts',
-      getContents: () => lazyImportLangCode.type,
+      getContents: () => genLazyImportLangCodeType(lang),
+    })
+
+    // HMR updates
+    nuxt.hooks.hook('builder:watch', async (event, path) => {
+      // no file add or remove, skip
+      if (event === 'change') {
+        return
+      }
+
+      // only watch langDir
+      if (!srcResolver.resolve(path).startsWith(langDir)) {
+        return
+      }
+
+      const templatesName = [
+        'locales/available.mjs',
+        'locales/available.d.ts',
+        'locales/lazy-import.mjs',
+        'locales/lazy-import.d.ts',
+      ]
+
+      await updateTemplates({
+        filter: template => templatesName.includes(template.filename),
+      })
     })
 
     addPlugin(resolver.resolve('./runtime/plugins/locale'))
