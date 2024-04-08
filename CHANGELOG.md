@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.0.6
+
+[compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.5...v0.0.6)
+
+### 🩹 Fixes
+
+- HMR updates support ([2e28f1c](https://github.com/Teages/nuxt-locale-lite/commit/2e28f1c))
+
+### 🏡 Chore
+
+- **release:** V0.0.5 ([80aa52f](https://github.com/Teages/nuxt-locale-lite/commit/80aa52f))
+- Clean names ([c170681](https://github.com/Teages/nuxt-locale-lite/commit/c170681))
+
+### ❤️ Contributors
+
+- Teages ([@Teages](http://github.com/Teages))
+
 ## v0.0.5
 
 [compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.4...v0.0.5)
