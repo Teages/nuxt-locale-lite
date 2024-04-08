@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.7
+
+[compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.6...v0.0.7)
+
+### 🩹 Fixes
+
+- Allow to visit the global i18n ([03d0d98](https://github.com/Teages/nuxt-locale-lite/commit/03d0d98))
+
+### ❤️ Contributors
+
+- Teages <Teages@teages.xyz>
+
 ## v0.0.6
 
 [compare changes](https://github.com/Teages/nuxt-locale-lite/compare/v0.0.5...v0.0.6)
